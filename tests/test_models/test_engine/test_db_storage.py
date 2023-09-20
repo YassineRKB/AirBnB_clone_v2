@@ -50,8 +50,9 @@ class test_DBStorage(unittest.TestCase):
         try:
             self.engine = create_engine(
                 "mysql+mysqldb://{}:{}@{}/{}".format(
-                    user, pwd, host, database)
-                ,pool_pre_ping=True,
+                    user, pwd, host, database
+                ),
+                pool_pre_ping=True,
             )
             self.Session = sessionmaker(bind=self.engine)
         except SQLAlchemyError as e:
@@ -102,7 +103,7 @@ class test_DBStorage(unittest.TestCase):
         )
         self.assertTrue(
             len(db_storage.__doc__) >= 1,
-             "db_storage.py is missing a docstring"
+            "db_storage.py is missing a docstring"
         )
 
     def test_all(self):
