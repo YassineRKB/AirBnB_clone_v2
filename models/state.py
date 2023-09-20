@@ -17,7 +17,9 @@ class State(BaseModel, Base):
     if env_value != 'db':
         cities = self.link()
     else:
-        cities = relationship('City', backref='states', cascade='all, delete-orphan')
+        cities = relationship(
+            'City', backref='states', cascade='all, delete-orphan'
+        )
 
     def link(self):
         from models.__init__ import storage

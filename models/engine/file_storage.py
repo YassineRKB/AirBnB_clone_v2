@@ -41,7 +41,7 @@ class FileStorage:
                     obj.__class__.__name__, obj.id
                 )
             )
-    
+
     def reload(self):
         """Loads storage dictionary from file"""
         from models.base_model import BaseModel
