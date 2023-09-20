@@ -38,7 +38,11 @@ class FileStorage:
         the method should not do anything
         """
         if obj:
-            self.__objects.pop(f"{obj.__class__.__name__}.{obj.id}")
+            self.__objects.pop(
+                "{}.{}".format(
+                    obj.__class__.__name__, obj.id
+                )
+            )
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -67,4 +71,3 @@ class FileStorage:
                     self.all()[key] = classes[val["__class__"]](**val)
         except FileNotFoundError:
             pass
-
