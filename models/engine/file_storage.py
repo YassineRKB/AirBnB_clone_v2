@@ -15,9 +15,7 @@ class FileStorage:
         result = {}
         for key in self.__objects.keys():
             if key.split(".")[0] == cls.__name__:
-                result.update(
-                    {key: self.__objects[key]}
-                )
+                result.update({key: self.__objects[key]})
         return result
 
     def new(self, obj):
@@ -41,7 +39,7 @@ class FileStorage:
                     obj.__class__.__name__, obj.id
                 )
             )
-
+    
     def reload(self):
         """Loads storage dictionary from file"""
         from models.base_model import BaseModel
