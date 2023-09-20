@@ -90,4 +90,3 @@ class DBStorage:
         """method to end current session"""
         self.save()
         self.__session.close()
-
