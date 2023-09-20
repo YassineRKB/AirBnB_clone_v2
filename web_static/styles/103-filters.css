@@ -29,15 +29,15 @@
 }
 
 .popover {
+	z-index:1;
+	position: relative;
 	list-style-type: none;
 	display: none;
 	background-color: #FAFAFA;
 	width: 100%;
-
 	margin-left: -1px;
 	margin-top: 8px;
 	padding: 25px 0px;
-
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
 }
@@ -53,7 +53,7 @@
 ul {
 	list-style-type: none;
 	padding: 0px;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 }
 
 li {
