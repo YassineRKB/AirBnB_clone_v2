@@ -7,13 +7,12 @@ function do_deploy:"""
 import os.path as Path
 from datetime import datetime
 from fabric.decorators import task
-from fabric.api import env, put, run
-
-# Define your remote server hosts
+from fabric.api import env, put, run, local
 env.hosts = [
     "100.25.192.79",
     "54.84.27.255"
 ]
+
 
 @task
 def do_deploy(archive_path):
@@ -37,10 +36,11 @@ def do_deploy(archive_path):
         return False
     if run("rm -rf /data/web_static/current").failed:
         return False
-    if run(f"ln -s {notExtSplit}/ /data/web_static/current", warn=True).failed:
+    if run(f"ln -s {notExtSplit}/ /data/web_static/current").failed:
         return False
     return True
-    
+
+
 @task
 def do_pack():
     """func for generating archive from web_static"""
