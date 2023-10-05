@@ -29,8 +29,8 @@ def do_deploy(archive_path):
         run(f"tar -xzf {tmp} -C {notExtSplit}/")
         run(f"rm {tmp}")
         run(f"mv {notExtSplit}/web_static/* {notExtSplit}/")
-        run(f"rm -rf {notExtSplit}/web_static")
         run("rm -rf /data/web_static/current")
+        run(f"rm -rf {notExtSplit}/web_static")
         run(f"ln -s {notExtSplit}/ /data/web_static/current")
         return True
     except:
