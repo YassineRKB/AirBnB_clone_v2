@@ -21,7 +21,7 @@ def do_deploy(archive_path):
         return False
     try:
         filename = Path.basename(archive_path)
-        notExtSplit = f"/data/web_static/releases/{filename.split(".")[0]}"
+        notExtSplit = f"/data/web_static/releases/{filename.split('.')[0]}"
         tmp = f"/tmp/{filename}"
         put(archive_path, tmp)
         run(f"mkdir -p {notExtSplit}/")
