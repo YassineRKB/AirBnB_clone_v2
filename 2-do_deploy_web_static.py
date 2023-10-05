@@ -17,25 +17,26 @@ env.hosts = [
 @task
 def do_deploy(archive_path):
     """Deploy an archive to web servers."""
-    try:
-        if not Path.exists(archive_path):
-            print(f"Error: Archive '{archive_path}' does not exist.")
-            return False
-        filename = Path.basename(archive_path)
-        notExtSplit = f'/data/web_static/releases/{filename.split(".")[0]}'
-        tmp = f"/tmp/{filename}"
-        put(archive_path, tmp)
-        run(f"mkdir -p {notExtSplit}/")
-        run(f"tar -xzf {tmp} -C {notExtSplit}/")
-        run(f"rm {tmp}")
-        run(f"mv {notExtSplit}/web_static/* {notExtSplit}/")
-        run(f"rm -rf {notExtSplit}/web_static")
-        if run("rm -rf /data/web_static/current", warn=True).failed:
-            raise Exception("Failed to remove current symlink.")
-        if run(f"ln -s {notExtSplit}/ /data/web_static/current", warn=True).failed:
-            raise Exception("Failed to create new symlink.")
-        print("Deployment successful.")
-        return True
-    except Exception as e:
-        print(f"Deployment failed: {e}")
+    if not Path.exists(archive_path):
         return False
+    filename = Path.basename(archive_path)
+    notExtSplit = f'/data/web_static/releases/{filename.split(".")[0]}'
+    tmp = f"/tmp/{filename}"
+    if put(archive_path, tmp).failed:
+        return False
+    if run(f"mkdir -p {notExtSplit}/").failed:
+        return False
+    if run(f"tar -xzf {tmp} -C {notExtSplit}/").failed:
+        return False
+    if run(f"rm {tmp}").failed:
+        return False
+    if run(f"mv {notExtSplit}/web_static/* {notExtSplit}/").failed:
+        return False
+    if run(f"rm -rf {notExtSplit}/web_static").failed:
+        return False
+    if run("rm -rf /data/web_static/current").failed:
+        return False
+    if run(f"ln -s {notExtSplit}/ /data/web_static/current", warn=True).failed:
+        return False
+    return True
+    
