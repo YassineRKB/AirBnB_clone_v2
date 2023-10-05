@@ -19,10 +19,10 @@ def do_deploy(archive_path):
     """Deploy an archive to web servers."""
     if not Path.exists(archive_path):
         return False
-    filename = Path.basename(archive_path)
-    notExtSplit = f'/data/web_static/releases/{filename.split(".")[0]}'
-    tmp = f"/tmp/{filename}"
     try:
+        filename = Path.basename(archive_path)
+        notExtSplit = f'/data/web_static/releases/{filename.split(".")[0]}'
+        tmp = f"/tmp/{filename}"
         put(archive_path, tmp)
         run(f"mkdir -p {notExtSplit}/")
         run(f"tar -xzf {tmp} -C {notExtSplit}/")
