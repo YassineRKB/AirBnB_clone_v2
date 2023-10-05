@@ -13,5 +13,5 @@ from fabric.decorators import task
 def do_pack():
     """func for generating archive from web_static"""
     stamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    archive_name = "versions/web_static_{stamp}.tgz"
+    archive_name = f"versions/web_static_{stamp}.tgz"
     local(f"mkdir -p versions && tar -cvzf {archive_name} web_static/")
