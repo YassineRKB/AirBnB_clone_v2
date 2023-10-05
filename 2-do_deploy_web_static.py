@@ -21,16 +21,18 @@ def do_deploy(archive_path):
         return False
     try:
         filename = Path.basename(archive_path)
-        notExtSplit = "/data/web_static/releases/{}".format(filename.split('.')[0])
-        tmp = f"/tmp/{filename}"
+        notExtSplit = "/data/web_static/releases/{}".format(
+            filename.split('.')[0]
+        )
+        tmp = "/tmp/{}".format(filename)
         put(archive_path, tmp)
-        run(f"mkdir -p {notExtSplit}/")
-        run(f"tar -xzf {tmp} -C {notExtSplit}/")
-        run(f"rm {tmp}")
-        run(f"mv {notExtSplit}/web_static/* {notExtSplit}/")
-        run(f"rm -rf {notExtSplit}/web_static")
+        run("mkdir -p {}/".format(notExtSplit))
+        run("tar -xzf {} -C {}/".format(tmp, notExtSplit))
+        run("rm {}".format(tmp))
+        run("mv {}/web_static/* {}/".format(notExtSplit, notExtSplit))
+        run("rm -rf {}/web_static".format(notExtSplit))
         run("rm -rf /data/web_static/current")
-        run(f"ln -s {notExtSplit}/ /data/web_static/current")
+        run("ln -s {}/ /data/web_static/current".format(notExtSplit))
         return True
     except Exception:
         return False
