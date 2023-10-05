@@ -5,6 +5,7 @@ function do_deploy:"""
 
 
 import os.path as Path
+from datetime import datetime
 from fabric.decorators import task
 from fabric.api import env, put, run
 
@@ -40,3 +41,9 @@ def do_deploy(archive_path):
         return False
     return True
     
+@task
+def do_pack():
+    """func for generating archive from web_static"""
+    stamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    archive_name = f"versions/web_static_{stamp}.tgz"
+    local(f"mkdir -p versions && tar -cvzf {archive_name} web_static/")
