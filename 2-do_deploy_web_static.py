@@ -4,9 +4,9 @@ that distributes an archive to your web servers, using the
 function do_deploy:"""
 
 
-import os.path.exists as Exists
-from fabric.api import local
+import os.path as Path
 from fabric.decorators import task
+from fabric.api import env, put, run
 
 
 env.hosts = [
@@ -18,8 +18,20 @@ env.hosts = [
 @task
 def do_deploy(archive_path):
     """func to distribute archive to web servers"""
-    if Exists(archive_path) is False:
+    try:
+        if not Path.exists(archive_path):
+            return False
+        filename = Path.basename(archive_path)
+        notExtSplit = f'/data/web_static/releases/{filename.split(".")[0]}'
+        tmp = f"/tmp/{filename}"
+        put(archive_path, tmp)
+        run(f"mkdir -p {notExtSplit}/")
+        run(f"tar -xzf {tmp} -C {notExtSplit}/")
+        run(f"rm {tmp}")
+        run(f"mv {notExtSplit}/web_static/* {notExtSplit}/")
+        run(f"rm -rf {notExtSplit}/web_static")
+        run("rm -rf /data/web_static/current")
+        run(f"ln -s {notExtSplit}/ /data/web_static/current")
+        return True
+    except:
         return False
-    filename = archive_path.split('/')[-1]
-    splitext = filename.split('.')[0]
-    path = '/data/web_static/releases/{}/'.format(splitext)
