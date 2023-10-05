@@ -14,15 +14,6 @@ env.hosts = [
 ]
 
 
-def deploy():
-    """distributes archive to web servers"""
-    archivePath = do_pack()
-    if archivePath is None:
-        return False
-    deployStatus = do_deploy(archivePath)
-    return deployStatus
-
-
 @task
 def do_deploy(archive_path):
     """Deploy an archive to web servers."""
@@ -53,3 +44,12 @@ def do_pack():
     stamp = datetime.now().strftime("%Y%m%d%H%M%S")
     archive_name = "versions/web_static_{}.tgz".format(stamp)
     local("mkdir -p versions && tar -cvzf {} web_static/".format(archive_name))
+
+@task
+def deploy():
+    """distributes archive to web servers"""
+    archivePath = do_pack()
+    if archivePath is None:
+        return False
+    deployStatus = do_deploy(archivePath)
+    return deployStatus
