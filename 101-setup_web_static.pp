@@ -6,7 +6,7 @@ exec { 'apt-update':
 }
 
 # Install nginx package
--> package { 'nginx':
+package { 'nginx':
   ensure  => 'installed',
   require => Exec['apt-update'],
 }
@@ -20,22 +20,19 @@ $alx_current     = "${alx_base}/current"
 $alx_nginx_sites  = '/etc/nginx/sites-available/default'
 
 # Create directories and set ownership
--> file { [$alx_tests, $alx_shared]:
+file { [$alx_tests, $alx_shared]:
   ensure => 'directory',
 }
-
--> file { $alx_index:
+file { $alx_index:
   ensure  => 'file',
   content => 'Hello World!',
 }
-
--> file { $alx_current:
+file { $alx_current:
   ensure => 'link',
   target => $alx_tests,
   force  => true,
 }
-
--> exec { 'chown-web-static':
+exec { 'chown-web-static':
   command => "sudo chown -R ubuntu:ubuntu ${alx_base}",
   path    => '/usr/bin',
   require => File[$alx_tests],
@@ -43,14 +40,14 @@ $alx_nginx_sites  = '/etc/nginx/sites-available/default'
 
 # Configure nginx
 $nginx_config = 'location /hbnb_static/ { alias $alx_current/; }'
--> file { $alx_nginx_sites:
+file { $alx_nginx_sites:
   ensure  => 'file',
   content => template('path/to/nginx_template.erb'), # You can use an ERB template for this configuration
   require => Exec['chown-web-static'],
 }
 
 # Restart nginx service
--> service { 'nginx':
+service { 'nginx':
   ensure    => 'running',
   enable    => true,
   require   => File[$alx_nginx_sites],
