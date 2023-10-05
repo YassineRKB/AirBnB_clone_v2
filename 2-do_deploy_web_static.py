@@ -4,7 +4,7 @@ that distributes an archive to your web servers, using the
 function do_deploy:"""
 
 
-from datetime import datetime
+import os.path.exists as Exists
 from fabric.api import local
 from fabric.decorators import task
 
@@ -18,5 +18,8 @@ env.hosts = [
 @task
 def do_deploy(archive_path):
     """func to distribute archive to web servers"""
-    try:
-        with_ext = archive_path.split("/")[-1]
+    if Exists(archive_path) is False:
+        return False
+    filename = archive_path.split('/')[-1]
+    splitext = filename.split('.')[0]
+    path = '/data/web_static/releases/{}/'.format(splitext)
