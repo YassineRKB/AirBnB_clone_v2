@@ -17,7 +17,7 @@ ALX_nginxSites="/etc/nginx/sites-available/default"
 sudo mkdir -p "$ALX_tests" "$ALX_shared"
 echo 'Hello World!' | sudo tee "$ALX_index" > /dev/null
 sudo ln -sfn "$ALX_tests" "$ALX_current" 
-chown -R ubuntu:ubuntu "$ALX_base"
+sudo chown -R ubuntu:ubuntu "$ALX_base"
 
 ## nginx configs
 nginx_config="location /hbnb_static/ { alias $ALX_current/; }"
