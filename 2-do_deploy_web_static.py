@@ -45,4 +45,4 @@ def do_pack():
     """func for generating archive from web_static"""
     stamp = datetime.now().strftime("%Y%m%d%H%M%S")
     archive_name = "versions/web_static_{}.tgz".format(stamp)
-    local("mkdir -p versions && tar -cvzf {} web_static".format(archive_name))
+    local("mkdir -p versions && tar -cvzf {} web_static/".format(archive_name))
