@@ -26,7 +26,9 @@ def do_deploy(archive_path):
         Makefolder = workPath + fileName
         put(archive_path, "/tmp/")
         run("mkdir -p " + Makefolder)
-        run("tar -xzf /tmp/{} -C {}{}/".format(fileFullName, workPath, fileName))
+        run("tar -xzf /tmp/{} -C {}{}/".format(
+            fileFullName, workPath, fileName)
+            )
         run("rm /tmp/{}".format(fileFullName))
         run("mv {}{}/web_static/* {}{}/".format(workPath, fileName))
         run("rm -rf {}{}/web_static".format(workPath, fileName))
