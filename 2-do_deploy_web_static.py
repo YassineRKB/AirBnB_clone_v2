@@ -12,6 +12,7 @@ env.hosts = [
     "100.25.192.79",
     "54.84.27.255"
 ]
+env.key_filename = 'alx0x01'
 
 
 @task
