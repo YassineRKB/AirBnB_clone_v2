@@ -9,8 +9,8 @@ from datetime import datetime
 from fabric.decorators import task
 from fabric.api import env, put, run, local
 env.hosts = [
-    "100.25.192.79",
-    "54.84.27.255"
+    "ubuntu@100.25.192.79",
+    "ubuntu@54.84.27.255"
 ]
 env.key_filename = 'alx0x01'
 
