@@ -59,15 +59,10 @@ def deploy():
 
 @task
 def do_clean(number=0):
-    """Cleans old version's archives from servers."""
+    """localy and remotly cleans versions"""
     num = 1
     if int(number) != 0:
         num = int(number)
-    local("find ./versions/* -type d -prune -print | \
-  sort -r | \
-  tail -n +{} | \
-  xargs rm -fr".format(num+1))
-    run("find /data/web_static/releases/* -type d -prune -print | \
-  sort -r | \
-  tail -n +{} | \
-  xargs rm -fr".format(num+1))
+    path = "/data/web_static/releases/*"
+    run("ls -dt {} | head -n -{} | xargs rm -fr".format(path, num))
+    local("ls -dt ./versions/* | head -n -{} | xargs rm -fr".format(num))
