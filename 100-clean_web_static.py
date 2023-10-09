@@ -3,7 +3,7 @@
 deletes out-of-date archives, using the function do_clean:"""
 
 
-import os.path as Path
+import os
 from datetime import datetime
 from fabric.decorators import task
 from fabric.api import env, put, run, local, lcd, cd
@@ -16,22 +16,23 @@ env.hosts = [
 @task
 def do_deploy(archive_path):
     """Deploy an archive to web servers."""
-    if not Path.exists(archive_path):
+    if not os.path.exists(archive_path):
         return False
     try:
-        filename = Path.basename(archive_path)
-        notExtSplit = "/data/web_static/releases/{}".format(
-            filename.split('.')[0]
-        )
-        tmp = "/tmp/{}".format(filename)
-        put(archive_path, tmp)
-        run("mkdir -p {}/".format(notExtSplit))
-        run("tar -xzf {} -C {}/".format(tmp, notExtSplit))
-        run("rm {}".format(tmp))
-        run("mv {}/web_static/* {}/".format(notExtSplit, notExtSplit))
-        run("rm -rf {}/web_static".format(notExtSplit))
+        fileFullName = archive_path.split("/")[-1]
+        fileName = archive_path.split("/")[-1].split(".")[0]
+        workPath = "/data/web_static/releases/"
+        Makefolder = workPath + fileName
+        put(archive_path, "/tmp/")
+        run("mkdir -p " + Makefolder)
+        run("tar -xzf /tmp/{} -C {}{}/".format(
+            fileFullName, workPath, fileName)
+            )
+        run("rm /tmp/{}".format(fileFullName))
+        run("mv {}{}/web_static/* {}{}/".format(workPath, fileName))
+        run("rm -rf {}{}/web_static".format(workPath, fileName))
         run("rm -rf /data/web_static/current")
-        run("ln -s {}/ /data/web_static/current".format(notExtSplit))
+        run("ln -s {}{}/ /data/web_static/current".format(workPath, fileName))
         return True
     except Exception:
         return False
@@ -43,6 +44,7 @@ def do_pack():
     stamp = datetime.now().strftime("%Y%m%d%H%M%S")
     archive_name = "versions/web_static_{}.tgz".format(stamp)
     local("mkdir -p versions && tar -cvzf {} web_static/".format(archive_name))
+
 
 @task
 def deploy():
