@@ -27,6 +27,14 @@ def c_text(text):
     return result
 
 
+@app.route('/python')
+@app.route('/python/<text>')
+def python_text(text="is cool"):
+    """display Python parameter text"""
+    result = 'Python {}'.format(text.replace('_', ' '))
+    return result
+
+
 if __name__ == "__main__":
     app.run(
         host=HostAddr,
