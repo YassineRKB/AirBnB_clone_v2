@@ -22,7 +22,7 @@ def hbnb():
 @app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
     """display c parameter text"""
-    result = f"C {text.replace('_', ' ')}"
+    result = "C {}".format(text.replace('_', ' '))
     return result
 
 
