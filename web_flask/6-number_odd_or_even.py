@@ -48,12 +48,12 @@ def number_template_n(n):
     return render_template("5-number.html", intnum=n)
 
 
-@app.route("/number_template/<int:n>")
+@app.route("/number_odd_or_even/<int:n>")
 def number_is_even_odd_verdict(n):
     """displays int parameter text using template
     if n is int"""
-    verdict = "even" if n % 2 == 0 else "odd"
-    return render_template('6-number_odd_or_even.html', verdict=verdict, number=n)
+    verdict = f"{n} is even" if n % 2 == 0 else f"{n} is odd"
+    return render_template('6-number_odd_or_even.html', data=verdict)
 if __name__ == "__main__":
     app.run(
         host=HostAddr,
