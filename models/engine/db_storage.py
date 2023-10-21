@@ -90,3 +90,7 @@ class DBStorage:
         """method to end current session"""
         self.save()
         self.__session.close()
+
+    def close(self):
+        """method to call remove() on ession"""
+        self.__session.close()
