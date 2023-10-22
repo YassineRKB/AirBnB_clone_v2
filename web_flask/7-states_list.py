@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """script that starts a Flask web application"""
 
+from flask import Flask, render_template
 from models import storage
 from models.state import State
-from flask import Flask, render_template
 HostAddr = "0.0.0.0"
 HostPort = 5000
 app = Flask(__name__)
@@ -18,6 +18,12 @@ def states_list():
         key=lambda item: item[1].name)
     )
     return render_template("7-states_list.html", states=states)
+
+
+@app.teardown_appcontext
+def teardown_context(exception):
+    """Close storage when teardown"""
+    storage.close()
 
 
 if __name__ == "__main__":
