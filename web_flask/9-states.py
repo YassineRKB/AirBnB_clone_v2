@@ -20,14 +20,14 @@ def teardown_context(exception):
 def states():
     """display all cities by states"""
     states = storage.all(State)
-    states = dict(sorted(
+    data = dict(sorted(
         states.items(),
         key=lambda item: item[1].name)
         )
     return render_template(
         "9-states.html",
-        missingRes=False,
-        data=states,
+        not_found=False,
+        data=data,
         id=None
         )
 
@@ -39,7 +39,7 @@ def states_id(id):
     if state is None:
         return render_template(
             "9-states.html",
-            missingRes=True,
+            not_found=True,
             data=states
             )
     citiesList = storage.all(City)
@@ -53,10 +53,9 @@ def states_id(id):
         )
     return render_template(
         "9-states.html",
-        missingRes=False,
         name=state.name,
-        data=cities,
-        id=1
+        not_found=False,
+        data=cities, id=1
         )
 
 
