@@ -95,7 +95,7 @@ class DBStorage:
         """method to call remove() on ession"""
         self.__session.close()
 
-def search(self, cls=None, **kwargs):
+    def search(self, cls=None, **kwargs):
         """method to search db in current session"""
         objs = self.all(cls)
         for key, obj in objs.items():
