@@ -27,3 +27,11 @@ def states_by_id(id=None):
         cities=cities,
         id=id
         )
+
+
+if __name__ == "__main__":
+    app.run(
+        host=HostAddr,
+        port=HostPort,
+        debug=True
+    )
