@@ -54,6 +54,8 @@ def number_is_even_odd_verdict(n):
     if n is int"""
     verdict = f"{n} is even" if n % 2 == 0 else f"{n} is odd"
     return render_template('6-number_odd_or_even.html', data=verdict)
+
+
 if __name__ == "__main__":
     app.run(
         host=HostAddr,

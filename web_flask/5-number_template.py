@@ -47,6 +47,7 @@ def number_template_n(n):
     """display int parameter text using template"""
     return render_template("5-number.html", intnum=n)
 
+
 if __name__ == "__main__":
     app.run(
         host=HostAddr,

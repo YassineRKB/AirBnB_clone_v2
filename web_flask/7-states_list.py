@@ -16,6 +16,7 @@ def states_list():
     states = storage.all(State)
     return render_template('7-states_list.html', data=states.values())
 
+
 if __name__ == "__main__":
     app.run(
         host=HostAddr,
