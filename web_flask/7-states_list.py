@@ -14,7 +14,11 @@ app.url_map.strict_slashes = False
 def states_list():
     """display all states """
     states = storage.all(State)
-    return render_template('7-states_list.html', states=states.values())
+    states = dict(sorted(
+        states.items(),
+        key=lambda item: item[1].name)
+    )
+    return render_template("7-states_list.html", states=states)
 
 
 if __name__ == "__main__":
