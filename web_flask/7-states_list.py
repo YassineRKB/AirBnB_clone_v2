@@ -6,7 +6,7 @@ from models import storage
 from models.state import State
 HostAddr = "0.0.0.0"
 HostPort = 5000
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 
 
 @app.route('/states_list', strict_slashes=False)

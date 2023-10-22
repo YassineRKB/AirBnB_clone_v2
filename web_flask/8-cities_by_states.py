@@ -6,12 +6,12 @@ from models import storage
 from models.state import State
 HostAddr = "0.0.0.0"
 HostPort = 5000
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 
 
 @app.route('/cities_by_states', strict_slashes=False)
 def states_list():
-    """display all cities by states """
+    """display all cities by states"""
     states = storage.all(State)
     states = dict(sorted(
         states.items(),
