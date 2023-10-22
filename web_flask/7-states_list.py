@@ -22,7 +22,7 @@ def states_list():
 
 @app.teardown_appcontext
 def teardown_context(exception):
-    """Close storage when teardown"""
+    """teardown"""
     storage.close()
 
 
