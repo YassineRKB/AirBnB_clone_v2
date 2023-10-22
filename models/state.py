@@ -26,7 +26,7 @@ class State(BaseModel, Base):
 
             obj_list = []
             strg = storage.all(City)
-            for key, value in strg.items():
+            for value in strg.items():
                 if self.id == value.state_id:
                     obj_list.append(value)
             return obj_list
