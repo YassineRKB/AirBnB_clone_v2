@@ -3,7 +3,8 @@
 
 from models import storage
 from models.state import State
-from models.city import City
+from models.cities import City
+from models.place import Place
 from models.amenity import Amenity
 from flask import Flask, render_template
 HostAddr = "0.0.0.0"
@@ -11,10 +12,11 @@ HostPort = 5000
 app = Flask(__name__, template_folder="templates")
 
 
-@app.route("/hbnb_filters", strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def hbnb_filters():
     """ """
     statesRAW = storage.all(State)
+    placesRAW = storage.all(Place)
     citiesRAW = storage.all(City)
     amenitiesRAW = storage.all(Amenity)
     states = dict(sorted(
@@ -23,13 +25,17 @@ def hbnb_filters():
     cities = dict(sorted(
         citiesRAW.items(), key=lambda item: item[1].name)
         )
+    places = dict(sorted(
+        placesRAW.items(), key=lambda item: item[1].name)
+        )
     amenities = dict(sorted(
         amenitiesRAW.items(), key=lambda item: item[1].name)
         )
     return render_template(
-        "10-hbnb_filters.html",
+        "100-hbnb.html",
         states=states,
         cities=cities,
+        places=places,
         amenities=amenities
         )
 
