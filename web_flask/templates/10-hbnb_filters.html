@@ -19,11 +19,11 @@
 					<h3>States</h3>
 					<h4>&nbsp;</h4>
 					<ul class="popover">
-					{% for key1, state in states.items() %}
+					{% for index, state in states.items() %}
 						<li>
 							<h2>{{ state.name }}</h2>
 							<ul>
-							{% for key2, city in cities.items() %}
+							{% for key, city in cities.items() %}
 								{% if state.id == city.state_id %}
 									<li>
 										<h4>{{ city.name }}</h4>
@@ -39,7 +39,7 @@
 					<h3>Amenities</h3>
 					<h4>&nbsp;</h4>
 					<ul class="popover">
-					{% for key3, amenity in amenities.items() %}
+					{% for sufix, amenity in amenities.items() %}
 						<li>
 							<h4>{{ amenity.name }}</h4>
 						</li>
